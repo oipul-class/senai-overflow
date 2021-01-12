@@ -1,19 +1,19 @@
-const Aluno = require("../models/Aluno");
+const Aluno = require("../models/Student");
 //const { Op } = require("sequelize");
 
 
 //export de funçoes
 module.exports = {
 
-    //função de listagem de aluno
+    //função de listagem de Aluno
     async listarAlunos(req, res) {
         
         try {
-            //lista de aluno 
-            const alunos = await Aluno.findAll();
+            //lista de Aluno 
+            const Alunos = await Aluno.findAll();
 
-            //enviando a lista de alunos
-            res.send(alunos);
+            //enviando a lista de Alunos
+            res.send(Alunos);
         } catch(error) {
             console.log(error);
             res.status(500).send({ error });
@@ -22,31 +22,31 @@ module.exports = {
         
     },
 
-    //função de buscar aluno por ID
+    //função de buscar Aluno por ID
     async buscarAluno(req, res) {
             try {
                 //pegando o valor no parametro
                 const id = req.params.id;
 
+
                 const aluno = await Aluno.findByPk(id, {
-                    attributes: ["id", "ra", "nome", "email",   "createdAt", "updatedAt"] //busca por chave primaria e apenas puxa atributos mencionados
+                    attributes: ["id", "ra", "nome", "email", "createdAt", "updatedAt"] //busca por chave primaria e apenas puxa atributos mencionados
                 });
-
-                if (aluno!=null) {
-
-                    
+                
+                if (aluno) {
 
                     //enviar dados
                     res.status(200).send(aluno);
                 } else {
-                    res.status(404).send({error : "aluno não encontrado"});
+                    res.status(404).send({error : "Aluno não encontrado"});
                 }
+
             } catch (error) {
                 res.status(500).send({ error });
             }
     },
 
-    //função de inserção de aluno
+    //função de inserção de Aluno
     async inserirAluno(req, res) {
         
         //ira ententar o que esta dentro das chaves
@@ -54,17 +54,17 @@ module.exports = {
             //variaveis puxada direto do body
             const { ra, nome, email, senha } = req.body;
             
-            const alunoRA = await Aluno.findOne({
+            const AlunoRA = await Aluno.findOne({
                 // [Op.or] : { where: { ra } } - ira trocar o operador AND pra OR
                 where: { ra }
             }); //findOne({ where - busca algo por igualdade}) --caso não encontre algo ira retorna null
 
-            if (alunoRA==null) {
+            if (AlunoRA==null) {
                 let aluno = await Aluno.create({ra, nome, email, senha})
 
                 res.status(201).send(aluno);    
             } else {
-                res.status(400).send({ error:"RA não pode ser igual ao de outro aluno" });
+                res.status(400).send({ error:"RA não pode ser igual ao de outro Aluno" });
             }
 
             
@@ -76,7 +76,7 @@ module.exports = {
         
         //old version
         // //variavel com o proximo id
-        // const nextId = alunos.length > 0 ?  alunos[alunos.length - 1].id + 1 : 1;
+        // const nextId = Alunos.length > 0 ?  Alunos[Alunos.length - 1].id + 1 : 1;
 
         // //re-construção do json com id 
         // const newBody = {
@@ -95,10 +95,10 @@ module.exports = {
         // }
 
         // //inserção no "banco"
-        // alunos.push(newBody);
+        // Alunos.push(newBody);
     },
 
-    //função de deleta um aluno por id
+    //função de deleta um Aluno por id
     async deletarAluno(req, res) {
         try {
             const id = req.params.id;
@@ -108,11 +108,11 @@ module.exports = {
             })
 
             if (!aluno) 
-                return res.status(404).send({ error: "aluno não encontrado"});
+                return res.status(404).send({ error: "Aluno não encontrado"});
             else {
                 aluno.destroy()
                 
-                res.status(200).send({status: "aluno deletado", aluno })
+                res.status(200).send({status: "Aluno deletado", aluno })
             }
         } catch (error) {
             res.status(500).send({ error })
@@ -131,7 +131,7 @@ module.exports = {
             const aluno = await Aluno.findByPk(id);
 
             if (!aluno) {
-                return res.status(404).send({ error: "aluno não encontrado"});
+                return res.status(404).send({ error: "Aluno não encontrado"});
             } else {
                 
                 if (nome!="" && nome!=null) {

@@ -5,7 +5,7 @@ module.exports = {
     //aqui dizemos o que deve ser criado
     
     //queryInterface.createTable("nome da tabela", {dados})
-    queryInterface.createTable("alunos",{
+    queryInterface.createTable("students",{
       // criando campo
       id: {
         type: Sequelize.INTEGER, //colocando o tipo do campo
@@ -51,6 +51,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     //aqui dizemos o que deve ser desfeito
-    queryInterface.dropTable("alunos");
+    queryInterface.dropTable("students");
   }
 };

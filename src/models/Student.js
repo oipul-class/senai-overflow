@@ -2,7 +2,7 @@
 const { Model, DataTypes } = require("sequelize");
 
 //criando classe
-class Aluno extends Model {
+class Student extends Model {
     //criando metodo init
     //aqui inicializamos nossos campos da tabela
     static init(sequelize){
@@ -21,14 +21,15 @@ class Aluno extends Model {
             {
                 // tableName: "" - caso o nome da tablea seja diferente do que esta na model
                 sequelize,
+                tableName: "alunos"
             }
         )
     }
 
     static associate(models) {
-        //fazer ligações entre tabelas
+        this.hasMany(models.Question, {foreignKey: "aluno_id"})
     }
 
 }
 
-module.exports = Aluno;
+module.exports = Student;
