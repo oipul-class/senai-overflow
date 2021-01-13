@@ -35,8 +35,13 @@ routes.put("/alunos/:id" , studentController.editarAluno);
 
 //--------------inicio de rotas de questions------------
 
+routes.get("/perguntas", questionController.index); 
+
 routes.post("/perguntas", questionController.store);
 
+routes.put("/perguntas/:id", questionController.update);
+
+routes.delete("/perguntas/:id", questionController.delete)
 //--------------final de rotas de questions-------------
 
 //export do routes

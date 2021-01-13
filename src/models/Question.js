@@ -21,13 +21,13 @@ class Question extends Model {
             {
                 // tableName: "" - caso o nome da tablea seja diferente do que esta na model
                 sequelize,
-                tableName: "perguntas"
             }
         )
     }
 
     static associate(models) {
         this.belongsTo(models.Student); //fazendo associação
+        this.belongsToMany(models.Category, { foreignKey: "question_id", through: "question_category"}) 
     }
 
 };

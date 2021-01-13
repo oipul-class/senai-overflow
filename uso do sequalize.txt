@@ -29,3 +29,7 @@ npx sequelize migration:create --name=(nome) = cria uma migration
 npx sequelize db:migrate = executar todas as migrades pendentes
 
 npx sequelize db:migrate:undo = desfaztudo --:all no final desfaz tudo
+
+npx sequelize seed:generate --name=(nome) = cria um seed/ seed é um arquivo para popular uma tabela
+
+npx sequelize db:seed:a --seed=(nome) = carrega um seed especifica/ :all - carrega

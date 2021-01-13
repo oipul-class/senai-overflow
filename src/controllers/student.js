@@ -146,7 +146,7 @@ module.exports = {
                     aluno.senha = senha
                 }
 
-                aluno.save()
+                await aluno.save()
 
                 res.status(201).send(aluno);
             }
