@@ -4,7 +4,8 @@ const dbConfig = require("../config/database");
 //imports dos models
 const Student = require("../models/Student");
 const Question = require("../models/Question");
-const Categories = require("../models/Category");
+const Category = require("../models/Category");
+const Answer = require("../models/Answer");
 
 //criando conexão com o banco
 const conexao = new Sequelize(dbConfig);
@@ -12,12 +13,15 @@ const conexao = new Sequelize(dbConfig);
 //inicializa os models
 Student.init(conexao);
 Question.init(conexao);
-Categories.init(conexao);
+Category.init(conexao);
+Answer.init(conexao);
 
 //inicializa os relacionamentos
 Student.associate(conexao.models);
 Question.associate(conexao.models);
-Categories.associate(conexao.models);
+Category.associate(conexao.models);
+Answer.associate(conexao.models);
+
 
 for (let assoc of Object.keys(Question.associations)) {
     for (let accessor of Object.keys(Question.associations[assoc].accessors)) {

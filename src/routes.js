@@ -4,7 +4,7 @@ const express = require("express");
 //Controllers
 const studentController = require("./controllers/student");
 const questionController = require("./controllers/question");
-
+const answerController = require("./controllers/answer");
 
 //criando uma instancia router do express
 const routes = express.Router();
@@ -42,7 +42,19 @@ routes.post("/perguntas", questionController.store);
 routes.put("/perguntas/:id", questionController.update);
 
 routes.delete("/perguntas/:id", questionController.delete)
+
 //--------------final de rotas de questions-------------
+
+
+//--------------inicio de rotas de answers------------
+
+routes.get("/respostas", answerController.index);
+
+routes.get("/respostas/filter", answerController.find);
+
+routes.post("/perguntas/:id/respostas", answerController.store);
+
+//--------------final de rotas de answers------------
 
 //export do routes
 module.exports = routes;

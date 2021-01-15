@@ -2,7 +2,7 @@
 const { Model, DataTypes } = require("sequelize");
 
 //criando classe
-class Question extends Model {
+class Answer extends Model {
     //criando metodo init
     //aqui inicializamos nossos campos da tabela
     static init(sequelize){
@@ -11,10 +11,8 @@ class Question extends Model {
             
             {
                 //iniciando variaveis
-                titulo: DataTypes.STRING,
-                descricao: DataTypes.STRING,
-                imagem: DataTypes.STRING,
-                gist: DataTypes.STRING
+                answer: DataTypes.TEXT,
+                student_id: DataTypes.INTEGER
             },
             
             //configando model
@@ -26,11 +24,10 @@ class Question extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Student); //fazendo associação
-        this.belongsToMany(models.Category, { foreignKey: "question_id", through: "question_category"});
-        this.hasMany(models.Answer); 
+        this.belongsTo(models.Question);
+        this.belongsTo(models.Student);
     }
 
-};
+}
 
-module.exports = Question;
+module.exports = Answer;

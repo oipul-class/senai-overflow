@@ -27,6 +27,7 @@ class Student extends Model {
 
     static associate(models) {
         this.hasMany(models.Question);
+        this.hasMany(models.Answer); 
     }
 
 }
