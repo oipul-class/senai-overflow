@@ -3,6 +3,7 @@ const Aluno = require("../models/Student");
 const Answer = require("../models/Answer");
 
 module.exports = {
+    //função de listagem de respostas
     async index( req, res ) {
 
         try {
@@ -18,6 +19,7 @@ module.exports = {
 
     },
 
+    //função de listagem de resposta com filtro
     async find( req, res ) {
 
         const question_id = req.query.pergunta;
@@ -54,6 +56,7 @@ module.exports = {
 
     },
     
+    //função de inserção de resposta
     async store( req, res ) {
 
         try {
