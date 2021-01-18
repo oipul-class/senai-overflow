@@ -5,6 +5,7 @@ const express = require("express");
 const studentController = require("./controllers/student");
 const questionController = require("./controllers/question");
 const answerController = require("./controllers/answer");
+const feedController = require("./controllers/feed");
 
 //criando uma instancia router do express
 const routes = express.Router();
@@ -14,20 +15,20 @@ const routes = express.Router();
 
 //configuração de rotas
 //endpoint GET de listagem de students
-routes.get("/alunos" , studentController.listarAlunos);
+routes.get("/students" , studentController.listarAlunos);
 
 //endpoint GET de listagem de um student por id
-routes.get("/alunos/:id" , studentController.buscarAluno);
+routes.get("/students/:id" , studentController.buscarAluno);
 
 //endpoint POST de inserção de student
-routes.post("/alunos" , studentController.inserirAluno);
+routes.post("/students" , studentController.inserirAluno);
 
 //endpoint DELETE de deleta um student por id
 ///(endpoint/:(variavel)) = parametro
-routes.delete("/alunos/:id" , studentController.deletarAluno);
+routes.delete("/students/:id" , studentController.deletarAluno);
 
 //endpoint PUT de edição de um student por id
-routes.put("/alunos/:id" , studentController.editarAluno);
+routes.put("/students/:id" , studentController.editarAluno);
 
 //--------------final das rotas de students---------------
 
@@ -35,26 +36,35 @@ routes.put("/alunos/:id" , studentController.editarAluno);
 
 //--------------inicio de rotas de questions------------
 
-routes.get("/perguntas", questionController.index); 
+routes.get("/questions", questionController.index); 
 
-routes.post("/perguntas", questionController.store);
+routes.post("/questions", questionController.store);
 
-routes.put("/perguntas/:id", questionController.update);
+routes.put("/questions/:id", questionController.update);
 
-routes.delete("/perguntas/:id", questionController.delete)
+routes.delete("/questions/:id", questionController.delete)
 
 //--------------final de rotas de questions-------------
 
 
 //--------------inicio de rotas de answers------------
 
-routes.get("/respostas", answerController.index);
+routes.get("/anwsers", answerController.index);
 
-routes.get("/respostas/filter", answerController.find);
+routes.get("/anwsers/filter", answerController.find);
 
-routes.post("/perguntas/:id/respostas", answerController.store);
+routes.post("/questions/:id/anwsers", answerController.store);
 
+routes.delete("/answer/:id" , answerController.delete);
 //--------------final de rotas de answers------------
+
+
+//--------------inicio de rotas de feed------------
+
+routes.get("/feed", feedController.index);
+
+
+//--------------final de rotas de feed------------
 
 //export do routes
 module.exports = routes;

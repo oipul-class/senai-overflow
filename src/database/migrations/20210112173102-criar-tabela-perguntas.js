@@ -10,17 +10,17 @@ module.exports = {
         autoIncrement: true
       },
 
-      titulo: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false
       },
 
-      descricao: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false
       },
 
-      imagem: {
+      image: {
         type: Sequelize.STRING,
         allowNull: true
       },
@@ -35,7 +35,9 @@ module.exports = {
         references: { //referencia da chave 
           model: "students",
           key: "id"
-        } 
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
 
       created_at: {

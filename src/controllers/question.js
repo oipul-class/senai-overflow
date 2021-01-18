@@ -1,5 +1,5 @@
-const Pergunta = require("../models/Question");
-const Aluno = require("../models/Student");
+const Question = require("../models/Question");
+const Student = require("../models/Student");
 
 
 module.exports = {
@@ -7,9 +7,9 @@ module.exports = {
         
         try {
             
-            let perguntas = await Pergunta.findAll();
+            let questions = await Question.findAll();
 
-            res.send(perguntas);
+            res.send(questions);
 
         } catch (error) {
             console.log(error);
@@ -19,28 +19,28 @@ module.exports = {
     },
 
     async store( req, res ) { //inserir
-        const { titulo, descricao, imagem, gist, categorias } = req.body;
+        const { title, description, image, gist, categories   } = req.body;
 
-        const alunoId = req.headers.authorization;
+        const student_id = req.headers.authorization;
 
 
         try {
            
-            //buscar o Aluno pelo ID
-            let aluno = await Aluno.findByPk(alunoId);
+            //buscar o Student pelo ID
+            let student = await Student.findByPk(student_id);
 
-            //se Aluno não existir, retorna erro
-            if (!aluno) 
-                return res.status(404).send({ error: "Aluno não encontrado"});
+            //se Student não existir, retorna erro
+            if (!student) 
+                return res.status(404).send({ error: "Student não encontrado"});
 
-            //crio a Pergunta para o Aluno
-            let pergunta = await aluno.createQuestion({ titulo, descricao, imagem, gist });
+            //crio a Question para o Student
+            let question = await student.createQuestion({ title, description, image, gist });
 
-            await pergunta.addCategories(categorias);
+            await question.addCategories(categories);
 
-            console.log(pergunta);
+            console.log(question);
             //retorno sucesso
-            res.status(201).send(pergunta);
+            res.status(201).send(question);
         } catch (error) {
             console.log(error);
             res.status(500).send({ error });
@@ -54,38 +54,41 @@ module.exports = {
 
     async update( req, res ) {//atualizar
         
-        const alunoId = req.headers.authorization;
+        const student_id = req.headers.authorization;
 
-        const perguntaID = req.params.id;
+        const question_id = req.params.id;
 
         try {
             
-             //buscar o Aluno pelo ID
-             let aluno = await Aluno.findByPk(alunoId);
+             //buscar o Student pelo ID
+             let student = await Student.findByPk(student_id);
 
-             //se Aluno não existir, retorna erro
-             if (!aluno) 
-                 return res.status(404).send({ error: "Aluno não encontrado"});
+             //se Student não existir, retorna erro
+             if (!student) 
+                 return res.status(404).send({ error: "Student não encontrado"});
 
             //modificação da partgunta
-            let pergunta = await Pergunta.findByPk(perguntaID);
+            let question = await Question.findByPk(question_id);
 
-            if (!pergunta)
-                return res.status(404).send({ error: "Pergunta não encontrada" });
+            if (!question)
+                return res.status(404).send({ error: "Question não encontrada" });
 
-            pergunta = await Pergunta.findOne({where: { aluno_id: alunoId }});
+                question = await Question.findOne({where: { 
+                    id: question_id,
+                    student_id 
+                }});
 
-            if (!pergunta)
+            if (!question)
                 return res.status(401).send({ error: "Não autorizado" });
 
-            const { titulo, descricao } = req.body;
+            const { title, description } = req.body;
             
-            pergunta.titulo = titulo;
-            pergunta.descricao = descricao;
+            question.title = title;
+            question.description = description;
 
-            await pergunta.save();
+            await question.save();
 
-            res.status(201).send(pergunta);
+            res.status(201).send(question);
 
         } catch (error) {
             console.log(error);
@@ -95,31 +98,31 @@ module.exports = {
     },
 
     async delete( req, res ) {//deletar
-        const AlunoId = req.headers.authorization;
+        const student_id = req.headers.authorization;
 
-        const PerguntaID = req.params.id;
+        const question_id = req.params.id;
 
          try {
 
-            //buscar o Aluno pelo ID
-            let aluno = await Aluno.findByPk(AlunoId);
+            //buscar o Student pelo ID
+            let student = await Student.findByPk(student_id);
 
-            //se Aluno não existir, retorna erro
-            if (!aluno) 
-                return res.status(404).send({ error: "Aluno não encontrado"});
+            //se Student não existir, retorna erro
+            if (!student) 
+                return res.status(404).send({ error: "Student não encontrado"});
 
-            let pergunta = await Pergunta.findOne({
+            let question = await Question.findOne({
                 where: {
-                    id: PerguntaID,
-                    aluno_id: AlunoId
+                    id: question_id,
+                    student_id
                 }
             });
 
-            pergunta.destroy();
+            question.destroy();
 
             res.send(200).send({
                 status: "deletado",
-                pergunta: pergunta
+                pergunta: question
             })
 
          } catch (error) {

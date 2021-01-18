@@ -10,16 +10,20 @@ module.exports = {
         references: { //referencia da chave 
           model: "questions",
           key: "id"
-        } 
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
 
-      categories_id : { //chave estrangeira
+      category_id : { //chave estrangeira
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { //referencia da chave 
           model: "categories",
           key: "id"
-        } 
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
 
       created_at: {
@@ -37,6 +41,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("category");
+    await queryInterface.dropTable("question_category");
   }
 };

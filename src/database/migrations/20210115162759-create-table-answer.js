@@ -20,7 +20,9 @@ module.exports = {
         references: { //referencia da chave 
           model: "students",
           key: "id"
-        } 
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
 
       question_id : { //chave estrangeira
@@ -47,6 +49,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.dopTable("answers");
+    queryInterface.dropTable("answers");
   }
 };

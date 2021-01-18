@@ -12,9 +12,9 @@ class Student extends Model {
             {
                 //iniciando variaveis
                 ra: DataTypes.STRING,
-                nome: DataTypes.STRING,
+                name: DataTypes.STRING,
                 email: DataTypes.STRING,
-                senha: DataTypes.STRING
+                password: DataTypes.STRING
             },
             
             //configando model

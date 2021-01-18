@@ -11,9 +11,9 @@ class Question extends Model {
             
             {
                 //iniciando variaveis
-                titulo: DataTypes.STRING,
-                descricao: DataTypes.STRING,
-                imagem: DataTypes.STRING,
+                title: DataTypes.STRING,
+                description: DataTypes.STRING,
+                image: DataTypes.STRING,
                 gist: DataTypes.STRING
             },
             

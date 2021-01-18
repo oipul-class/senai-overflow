@@ -19,7 +19,7 @@ module.exports = {
         unique: true //não permitir o mesmo valor no banco
       },
 
-      nome: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false, 
       },
@@ -29,7 +29,7 @@ module.exports = {
         allowNull: false, 
       },
 
-      senha: {
+      password: {
         type: Sequelize.STRING,
         allowNull: false, 
       },

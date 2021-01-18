@@ -1,5 +1,5 @@
-const Pergunta = require("../models/Question");
-const Aluno = require("../models/Student");
+const Question = require("../models/Question");
+const Student = require("../models/Student");
 const Answer = require("../models/Answer");
 
 module.exports = {
@@ -8,9 +8,9 @@ module.exports = {
 
         try {
             
-            const respostas = await Answer.findAll();
+            const responses = await Answer.findAll();
 
-            res.send(respostas);
+            res.send(responses);
 
         } catch (error) {
             console.log(error);
@@ -29,28 +29,28 @@ module.exports = {
             return res.status(400).send({error: "não foi colocado algo no filtro"});
 
         if (question_id && !student_id) {
-            const respostas = await Answer.findAll({
+            const responses = await Answer.findAll({
                 where: {QuestionId: question_id}
             });
 
-            return res.send(respostas)
+            return res.send(responses)
         }  
         
         if (student_id && !question_id) {
-            const respostas = await Answer.findAll({
+            const responses = await Answer.findAll({
                 where: {StudentId: student_id}
             });
 
-            return res.send(respostas)
+            return res.send(responses)
         } else {
-            const respostas = await Answer.findAll({
+            const responses = await Answer.findAll({
                 where: {
                     StudentId: student_id,
                     QuestionId: question_id
                 }
             });
 
-            return res.send(respostas)
+            return res.send(responses)
         }
             
 
@@ -63,23 +63,23 @@ module.exports = {
 
             const {answer}  = req.body;
 
-            const perguntaId = req.params.id
+            const question_id = req.params.id
 
             const student_id = req.headers.authorization;
             
-            let aluno = await Aluno.findByPk(student_id);
+            let student = await Student.findByPk(student_id);
 
-            if (!aluno)
+            if (!student)
                 return res.status(404).send({error: "aluno não existe"});
 
-            let pergunta = await Pergunta.findByPk(perguntaId);
+            let question = await Question.findByPk(question_id);
 
-            if(!pergunta)
+            if(!question)
                 return res.status(404).send({error: "pergunta não existe"})
 
-            let resposta = await pergunta.createAnswer({answer, student_id});
+            let responses = await question.createAnswer({answer, student_id});
 
-            return res.status(201).send({resposta});
+            return res.status(201).send(responses);
 
         } catch (error) {
             console.log(error);
@@ -94,8 +94,37 @@ module.exports = {
 
     },
 
-    delete( req, res ) {
+    async delete( req, res ) {
 
+        const id = req.params.id
+
+        const student_id = req.headers.authorization;
+        try {
+            
+            const student = await Student.findByPk(student_id);
+
+            if (!student)
+                return res.status(404).send({ error: "aluno não existe"});
+
+            const answer = await Answer.findOne({
+                where: {
+                    id,
+                    student_id: student_id
+                }
+            });
+
+            if (!answer)
+                return res.status(404).send({error: "resposta não encontrada"});
+            
+            await answer.destroy();
+            
+            res.status(200).send({
+                status: "deletada"
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({ error });
+        }
 
 
     }

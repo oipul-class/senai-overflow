@@ -23,7 +23,7 @@ class Category extends Model {
     }
 
     static associate(models) {
-        this.belongsToMany(models.Question, { foreignKey: "categories_id", through: "question_category"})
+        this.belongsToMany(models.Question, { foreignKey: "category_id", through: "question_category"})
     }
 
 }

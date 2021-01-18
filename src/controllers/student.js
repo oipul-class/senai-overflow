@@ -1,19 +1,19 @@
-const Aluno = require("../models/Student");
+const Student = require("../models/Student");
 //const { Op } = require("sequelize");
 
 
 //export de funçoes
 module.exports = {
 
-    //função de listagem de Aluno
+    //função de listagem de Student
     async listarAlunos(req, res) {
         
         try {
-            //lista de Aluno 
-            const Alunos = await Aluno.findAll();
+            //lista de Student 
+            const students = await Student.findAll();
 
-            //enviando a lista de Alunos
-            res.send(Alunos);
+            //enviando a lista de Students
+            res.send(students);
         } catch(error) {
             console.log(error);
             res.status(500).send({ error });
@@ -22,21 +22,21 @@ module.exports = {
         
     },
 
-    //função de buscar Aluno por ID
+    //função de buscar Student por ID
     async buscarAluno(req, res) {
             try {
                 //pegando o valor no parametro
                 const id = req.params.id;
 
 
-                const aluno = await Aluno.findByPk(id, {
-                    attributes: ["id", "ra", "nome", "email", "createdAt", "updatedAt"] //busca por chave primaria e apenas puxa atributos mencionados
+                const student = await Student.findByPk(id, {
+                    attributes: ["id", "ra", "name", "email", "createdAt", "updatedAt"] //busca por chave primaria e apenas puxa atributos mencionados
                 });
                 
-                if (aluno) {
+                if (student) {
 
                     //enviar dados
-                    res.status(200).send(aluno);
+                    res.status(200).send(student);
                 } else {
                     res.status(404).send({error : "Aluno não encontrado"});
                 }
@@ -46,25 +46,25 @@ module.exports = {
             }
     },
 
-    //função de inserção de Aluno
+    //função de inserção de Student
     async inserirAluno(req, res) {
         
         //ira ententar o que esta dentro das chaves
         try {
             //variaveis puxada direto do body
-            const { ra, nome, email, senha } = req.body;
+            const { ra, name, email, password } = req.body;
             
-            const AlunoRA = await Aluno.findOne({
+            const studentRA = await Student.findOne({
                 // [Op.or] : { where: { ra } } - ira trocar o operador AND pra OR
                 where: { ra }
             }); //findOne({ where - busca algo por igualdade}) --caso não encontre algo ira retorna null
 
-            if (AlunoRA==null) {
-                let aluno = await Aluno.create({ra, nome, email, senha})
+            if (studentRA==null) {
+                let student = await Student.create({ra, name, email, password})
 
-                res.status(201).send(aluno);    
+                res.status(201).send(student);    
             } else {
-                res.status(400).send({ error:"RA não pode ser igual ao de outro Aluno" });
+                res.status(400).send({ error:"RA não pode ser igual ao de outro Student" });
             }
 
             
@@ -76,7 +76,7 @@ module.exports = {
         
         //old version
         // //variavel com o proximo id
-        // const nextId = Alunos.length > 0 ?  Alunos[Alunos.length - 1].id + 1 : 1;
+        // const nextId = Students.length > 0 ?  Students[Students.length - 1].id + 1 : 1;
 
         // //re-construção do json com id 
         // const newBody = {
@@ -95,24 +95,24 @@ module.exports = {
         // }
 
         // //inserção no "banco"
-        // Alunos.push(newBody);
+        // Students.push(newBody);
     },
 
-    //função de deleta um Aluno por id
+    //função de deleta um Student por id
     async deletarAluno(req, res) {
         try {
             const id = req.params.id;
 
-            const aluno = await Aluno.findByPk(id, {
-                attributes: ["id", "ra", "nome", "email",   "createdAt", "updatedAt"]
+            const student = await Student.findByPk(id, {
+                attributes: ["id", "ra", "name", "email", "createdAt", "updatedAt"]
             })
 
-            if (!aluno) 
+            if (!student) 
                 return res.status(404).send({ error: "Aluno não encontrado"});
             else {
-                aluno.destroy()
+                student.destroy()
                 
-                res.status(200).send({status: "Aluno deletado", aluno })
+                res.status(200).send({status: "Aluno deletado", student })
             }
         } catch (error) {
             res.status(500).send({ error })
@@ -126,29 +126,29 @@ module.exports = {
             const id = req.params.id;
 
             //pegar o corpo
-            const { nome, email, senha} = req.body;
+            const { name, email, password} = req.body;
 
-            const aluno = await Aluno.findByPk(id);
+            const student = await Student.findByPk(id);
 
-            if (!aluno) {
-                return res.status(404).send({ error: "Aluno não encontrado"});
+            if (!student) {
+                return res.status(404).send({ error: "Student não encontrado"});
             } else {
                 
-                if (nome!="" && nome!=null) {
-                    aluno.nome = nome
+                if (name!="" && name!=null) {
+                    student.name = name
                 }
 
                 if (email!="" && email!=null) {
-                    aluno.email = email
+                    student.email = email
                 }
 
-                if (senha!="" && senha!=null) {
-                    aluno.senha = senha
+                if (password!="" && password!=null) {
+                    student.password = password
                 }
 
-                await aluno.save()
+                await student.save()
 
-                res.status(201).send(aluno);
+                res.status(201).send(student);
             }
 
         } catch (error) {
