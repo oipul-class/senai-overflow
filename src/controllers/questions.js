@@ -21,17 +21,17 @@ module.exports = {
     async store( req, res ) { //inserir
         const { title, description, image, gist, categories   } = req.body;
 
-        const student_id = req.headers.authorization;
+        const { studentId } = req
 
 
         try {
            
             //buscar o Student pelo ID
-            let student = await Student.findByPk(student_id);
+            let student = await Student.findByPk(studentId);
 
             //se Student não existir, retorna erro
             if (!student) 
-                return res.status(404).send({ error: "Student não encontrado"});
+                return res.status(404).send({ error: "Aluno não encontrado"});
 
             //crio a Question para o Student
             let question = await student.createQuestion({ title, description, image, gist });
@@ -54,14 +54,14 @@ module.exports = {
 
     async update( req, res ) {//atualizar
         
-        const student_id = req.headers.authorization;
+        const { studentId } = req
 
         const question_id = req.params.id;
 
         try {
             
              //buscar o Student pelo ID
-             let student = await Student.findByPk(student_id);
+             let student = await Student.findByPk(studentId);
 
              //se Student não existir, retorna erro
              if (!student) 
@@ -98,14 +98,14 @@ module.exports = {
     },
 
     async delete( req, res ) {//deletar
-        const student_id = req.headers.authorization;
+        const { studentId } = req
 
         const question_id = req.params.id;
 
          try {
 
             //buscar o Student pelo ID
-            let student = await Student.findByPk(student_id);
+            let student = await Student.findByPk(studentId);
 
             //se Student não existir, retorna erro
             if (!student) 
@@ -114,7 +114,7 @@ module.exports = {
             let question = await Question.findOne({
                 where: {
                     id: question_id,
-                    student_id
+                    student_id: studentId
                 }
             });
 

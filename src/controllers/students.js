@@ -1,12 +1,13 @@
 const Student = require("../models/Student");
-//const { Op } = require("sequelize");
-
-
+const bcrypt = require("bcryptjs");
+const auth = require("../config/auth.json")
+const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize")
 //export de funçoes
 module.exports = {
 
     //função de listagem de Student
-    async listarAlunos(req, res) {
+    async index(req, res) {
         
         try {
             //lista de Student 
@@ -23,7 +24,7 @@ module.exports = {
     },
 
     //função de buscar Student por ID
-    async buscarAluno(req, res) {
+    async find(req, res) {
             try {
                 //pegando o valor no parametro
                 const id = req.params.id;
@@ -47,26 +48,43 @@ module.exports = {
     },
 
     //função de inserção de Student
-    async inserirAluno(req, res) {
+    async store(req, res) {
         
         //ira ententar o que esta dentro das chaves
         try {
             //variaveis puxada direto do body
             const { ra, name, email, password } = req.body;
             
-            const studentRA = await Student.findOne({
+            const studentCheck = await Student.findOne({
                 // [Op.or] : { where: { ra } } - ira trocar o operador AND pra OR
-                where: { ra }
+                 [Op.or] : { where: {ra, email}}
             }); //findOne({ where - busca algo por igualdade}) --caso não encontre algo ira retorna null
 
-            if (studentRA==null) {
-                let student = await Student.create({ra, name, email, password})
 
-                res.status(201).send(student);    
-            } else {
-                res.status(400).send({ error:"RA não pode ser igual ao de outro Student" });
-            }
+            if (studentCheck) 
+                return res.status(400).send({ error:"Aluno já cadastrado" });
+            
+                
+            const passwordCrypt = bcrypt.hashSync(password);
+            
+            /* metodos de criptografia
+            hash(variavel) -> retorna uma promise
+            hashsync(variavel) -> retorna a criptografia
+            
+            */
 
+            let student = await Student.create({ra, name, email, password: passwordCrypt})
+            
+            const token = jwt.sign({
+                studentId: student.id,
+                studentName: student.name
+            }, auth.secret);
+
+            res.status(201).send(
+            {
+                student,
+                token
+            }); 
             
         } catch(error) { //caso qualquer promesa der erro ele ira pular pro catch automaticamente
 
@@ -99,7 +117,7 @@ module.exports = {
     },
 
     //função de deleta um Student por id
-    async deletarAluno(req, res) {
+    async delete(req, res) {
         try {
             const id = req.params.id;
 
@@ -120,7 +138,7 @@ module.exports = {
     },
 
     //função de editar por id
-    async editarAluno(req, res) {
+    async update(req, res) {
         try {
             //puxar id dos parametros
             const id = req.params.id;
@@ -134,16 +152,16 @@ module.exports = {
                 return res.status(404).send({ error: "Student não encontrado"});
             } else {
                 
-                if (name!="" && name!=null) {
-                    student.name = name
-                }
+                if (name!="" && name!=null) 
+                    student.name = name;
 
-                if (email!="" && email!=null) {
-                    student.email = email
-                }
+                if (email!="" && email!=null) 
+                    student.email = email;
 
                 if (password!="" && password!=null) {
-                    student.password = password
+                    const passwordCrypt = bcrypt.hashSync(password);
+                    
+                    student.password = passwordCrypt;
                 }
 
                 await student.save()

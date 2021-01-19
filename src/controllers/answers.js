@@ -65,9 +65,9 @@ module.exports = {
 
             const question_id = req.params.id
 
-            const student_id = req.headers.authorization;
+            const { studentId } = req;
             
-            let student = await Student.findByPk(student_id);
+            let student = await Student.findByPk(studentId);
 
             if (!student)
                 return res.status(404).send({error: "aluno não existe"});
@@ -77,7 +77,7 @@ module.exports = {
             if(!question)
                 return res.status(404).send({error: "pergunta não existe"})
 
-            let responses = await question.createAnswer({answer, student_id});
+            let responses = await question.createAnswer({answer, student_id: studentId});
 
             return res.status(201).send(responses);
 
@@ -98,10 +98,10 @@ module.exports = {
 
         const id = req.params.id
 
-        const student_id = req.headers.authorization;
+        const { studentId } = req
         try {
             
-            const student = await Student.findByPk(student_id);
+            const student = await Student.findByPk(studentId);
 
             if (!student)
                 return res.status(404).send({ error: "aluno não existe"});

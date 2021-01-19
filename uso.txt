@@ -21,12 +21,14 @@ npm install sequelize -- use npx dps
 
 npm install  sequelize-cli
 
-npm install mysql2 -- driver
+npm install mysql2 = driver
 
+npm install jsonwebtoken = jwt
+
+npm install bcryptjs = incriptador
 
 ----------------------------------
 
 arquivo .gitignore = list de arquivos ignorados
 
-git init = inicializa um repositoriao
 
