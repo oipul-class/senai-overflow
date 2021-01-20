@@ -3,6 +3,7 @@ const express = require("express");
 
 //import das rotas
 const routes = require("./routes");
+const { errors } = require("celebrate");
 
 //import da conexão 
 require("./database");
@@ -15,7 +16,7 @@ app.use(express.json());
 
 //usando as rotas programadas
 app.use(routes);
-
+app.use(errors());
 
 //exportando o app
 module.exports = app;

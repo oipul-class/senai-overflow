@@ -57,7 +57,7 @@ module.exports = {
             
             const studentCheck = await Student.findOne({
                 // [Op.or] : { where: { ra } } - ira trocar o operador AND pra OR
-                 [Op.or] : { where: {ra, email}}
+                 where: {ra}
             }); //findOne({ where - busca algo por igualdade}) --caso não encontre algo ira retorna null
 
 

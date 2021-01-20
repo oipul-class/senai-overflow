@@ -7,3 +7,7 @@
 /jsonWebToken
 
 /src/config/auth.json
+
+/src/config/firebaseKey.json
+
+/uploads

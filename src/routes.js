@@ -1,8 +1,14 @@
 //import do express
 const express = require("express");
 
-//import do middleware
+//import do multer
+const Multer = require("multer");
+
+//import dos middleware
 const authMiddleware = require("./middleware/authorization");
+const studentMiddleware = require("./validators/student");
+const questionMiddleware = require("./validators/question")
+const answerValidator = require("./validators/answer")
 
 //Controllers
 const studentController = require("./controllers/students");
@@ -14,7 +20,25 @@ const sessionController = require("./controllers/sessions");
 //criando uma instancia router do express
 const routes = express.Router();
 
+//instancia do multer
+const multer = Multer({
+    storage: Multer.diskStorage({ //guarda em disco
+        destination: "uploads/",
+        filename: (req, file, callback) => {
+            const filename = Date.now() + "." + file.originalname.split(".").pop();
 
+            return callback(null, filename);
+        }
+    }),
+});
+
+routes.post("/upload", multer.single("arquivo"), (req, res) => {
+
+    console.log(req.file);
+
+    res.send(req.file);
+
+});
 
 //middleware = função que interpta a pedido para verificação, conversão e etc antes do pedido chegar no controller
 // const middleware = (req, res, next) => {
@@ -34,7 +58,7 @@ const routes = express.Router();
 routes.post("/sessions", sessionController.store);
 
 //endpoint POST de inserção de student
-routes.post("/students", studentController.store, sessionController.store);
+routes.post("/students", studentMiddleware.create, studentController.store);
 
 //--------------final das rotas publicas-------------------
 
@@ -66,7 +90,7 @@ routes.put("/students/:id", studentController.update);
 
 routes.get("/questions", questionController.index); 
 
-routes.post("/questions", questionController.store);
+routes.post("/questions", questionMiddleware.create, questionController.store);
 
 routes.put("/questions/:id", questionController.update);
 
@@ -82,7 +106,7 @@ routes.get("/anwsers", answerController.index);
 
 routes.get("/anwsers/filter", answerController.find);
 
-routes.post("/questions/:id/anwsers", answerController.store);
+routes.post("/questions/:id/anwsers", answerValidator.create, answerController.store);
 
 routes.delete("/answer/:id", answerController.delete);
 //--------------final de rotas de answers------------

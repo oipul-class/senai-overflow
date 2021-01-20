@@ -27,6 +27,12 @@ npm install jsonwebtoken = jwt
 
 npm install bcryptjs = incriptador
 
+npm install celebrate = validador que usa Joi
+
+---banco
+npm install firebase-admin 
+
+npm install multer
 ----------------------------------
 
 arquivo .gitignore = list de arquivos ignorados
