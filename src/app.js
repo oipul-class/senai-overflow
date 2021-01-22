@@ -14,6 +14,9 @@ const app = express();
 //abilitando o uso de json
 app.use(express.json());
 
+//rota de visizualização de imagem
+app.use("/uploads", express.static("uploads"))
+
 //usando as rotas programadas
 app.use(routes);
 app.use(errors());

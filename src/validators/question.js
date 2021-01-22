@@ -5,7 +5,7 @@ module.exports = {
         [Segments.BODY]: Joi.object().keys({
             title: Joi.string().min(1).max(255).required(),
             description: Joi.string().max(255).required(),
-            categories: Joi.array().items(Joi.number().integer()).required(),
+            categories: Joi.string().required(),
             gist: Joi.string().max(255)
         }) 
     })

@@ -32,7 +32,7 @@ npm install celebrate = validador que usa Joi
 ---banco
 npm install firebase-admin 
 
-npm install multer
+npm install multer = middleware para gerenciamento de multipart/form-data
 ----------------------------------
 
 arquivo .gitignore = list de arquivos ignorados
