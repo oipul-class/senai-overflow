@@ -17,7 +17,11 @@ module.exports = {
 
   async store(req, res) {
     //inserir
-    const { title, description, image, gist, categories } = req.body;
+    const { title, description, gist, categories } = req.body;
+
+    const createdAlunoId = req.alunoId;
+
+    const {firebaseUrl} = req.file ? req.file : "";
 
     const categoriesArray = categories.split(",");
 
@@ -35,7 +39,7 @@ module.exports = {
       let question = await student.createQuestion({
         title,
         description,
-        image,
+        image: firebaseUrl,
         gist,
       });
 
@@ -43,14 +47,7 @@ module.exports = {
 
       console.log(question);
       //retorno sucesso
-      res.status(201).send({
-        id: question.id,
-        title: question.title,
-        description: question.description,
-        created_at: question.created_at,
-        gist: question.gist,
-        image: `http://localhost:3333/${req.file.path}`,
-      });
+      res.status(201).send(question);
     } catch (error) {
       console.log(error);
       res.status(500).send({ error });

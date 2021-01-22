@@ -1,11 +1,16 @@
 //import do express
 const express = require("express");
 
+
+
 //import do multer
+const multer = require("multer")
 
 //import dos middleware
 const authMiddleware = require("./middleware/authorization");
-const questionUploadMiddleware = require("./middleware/uploadQuestionImage");
+const uploadQuestionImage = require("./middleware/uploadQuestionImage");
+const uploadImageService = require("./services/firebase");
+
 const studentMiddleware = require("./validators/student");
 const questionMiddleware = require("./validators/question");
 const answerValidator = require("./validators/answer");
@@ -16,10 +21,19 @@ const questionController = require("./controllers/questions");
 const answerController = require("./controllers/answers");
 const feedController = require("./controllers/feeds");
 const sessionController = require("./controllers/sessions");
-const uploadQuestionImage = require("./middleware/uploadQuestionImage");
+
+
 
 //criando uma instancia router do express
 const routes = express.Router();
+
+
+const Multer = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 1024 * 1024 * 2 }
+});
+
+
 
 //instancia do multer
 
@@ -89,6 +103,7 @@ routes.get("/questions", questionController.index);
 routes.post(
   "/questions",
   uploadQuestionImage,
+  uploadImageService,
   questionMiddleware.create,
   questionController.store
 );
