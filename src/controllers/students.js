@@ -1,8 +1,7 @@
 const Student = require("../models/Student");
 const bcrypt = require("bcryptjs");
-const auth = require("../config/auth.json")
-const jwt = require("jsonwebtoken");
-const { Op } = require("sequelize")
+const { generateToken } = require("../utils");
+
 //export de funçoes
 module.exports = {
 
@@ -75,10 +74,10 @@ module.exports = {
 
             let student = await Student.create({ra, name, email, password: passwordCrypt})
             
-            const token = jwt.sign({
+            const token = generateToken({
                 studentId: student.id,
                 studentName: student.name
-            }, auth.secret);
+            });
 
             res.status(201).send(
             {

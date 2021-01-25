@@ -21,7 +21,7 @@ module.exports = {
 
     const createdAlunoId = req.alunoId;
 
-    const {firebaseUrl} = req.file ? req.file : "";
+    const { firebaseUrl} = req.file ? req.file : "";
 
     const categoriesArray = categories.split(",");
 

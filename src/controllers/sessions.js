@@ -1,7 +1,6 @@
 const Student = require("../models/Student")
 const bcrypt = require("bcryptjs");
-const auth = require("../config/auth.json");
-const jwt = require("jsonwebtoken");
+const { generateToken } = require("../utils");
 
 module.exports = {
 
@@ -24,10 +23,10 @@ module.exports = {
             compareSync(variavel, variavel para comparação) = retorna true se for igual
             */
             
-            const token = jwt.sign({
+            const token = generateToken({
                 studentId: student.id,
                 studentName: student.name
-            }, auth.secret);
+            });
             
             /* 
             
