@@ -1,0 +1,40 @@
+npm init
+
+1- nome do projeto
+
+2- descrição
+
+
+download de pack
+
+npm install (nome)
+
+-D = dependencia de desenvolvimento
+
+bibliotecas util
+
+npm install express = framework
+
+npm install nodemon -D = live update
+
+npm install sequelize -- use npx dps
+
+npm install  sequelize-cli
+
+npm install mysql2 = driver
+
+npm install jsonwebtoken = jwt
+
+npm install bcryptjs = incriptador
+
+npm install celebrate = validador que usa Joi
+
+---banco
+npm install firebase-admin 
+
+npm install multer = middleware para gerenciamento de multipart/form-data
+----------------------------------
+
+arquivo .gitignore = list de arquivos ignorados
+
+

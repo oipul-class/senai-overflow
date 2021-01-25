@@ -1,0 +1,13 @@
+/node_modules
+
+/uso
+
+/uso do sequelize
+
+/jsonWebToken
+
+/src/config/auth.json
+
+/src/config/firebaseKey.json
+
+/uploads
