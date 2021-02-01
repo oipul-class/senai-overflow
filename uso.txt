@@ -29,6 +29,8 @@ npm install bcryptjs = incriptador
 
 npm install celebrate = validador que usa Joi
 
+npm install cors = gerenciador de permições de sites
+
 ---banco
 npm install firebase-admin 
 
