@@ -42,7 +42,8 @@ module.exports = {
                 student: {
                     studentId: student.id,
                     studentName: student.name,
-                    studentRA: student.ra
+                    studentRA: student.ra,
+                    studentEmail: student.email
                 },
                 token
             });

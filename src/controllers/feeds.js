@@ -9,7 +9,7 @@ module.exports = {
         try {
 
             const feed = await Question.findAll({
-                attributes: ["title", "description", "image", "gist", "createdAt"],
+                attributes: ["id", "title", "description", "image", "gist", "createdAt"],
                 include: [
                 
                     {

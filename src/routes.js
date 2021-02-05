@@ -21,6 +21,7 @@ const questionController = require("./controllers/questions");
 const answerController = require("./controllers/answers");
 const feedController = require("./controllers/feeds");
 const sessionController = require("./controllers/sessions");
+const categoryController = require("./controllers/category");
 
 
 
@@ -134,6 +135,12 @@ routes.delete("/answer/:id", answerController.delete);
 routes.get("/feed", feedController.index);
 
 //--------------final de rotas de feed------------
+
+//--------------inicio de rotas de categories------------
+
+routes.get("/categories", categoryController.index);
+
+//--------------final de rotas de categories------------
 
 //export do routes
 module.exports = routes;
