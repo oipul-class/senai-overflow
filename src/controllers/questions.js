@@ -19,8 +19,6 @@ module.exports = {
     //inserir
     const { title, description, gist, categories } = req.body;
 
-    const createdAlunoId = req.alunoId;
-
     const { firebaseUrl} = req.file ? req.file : "";
 
     const categoriesArray = categories.split(",");

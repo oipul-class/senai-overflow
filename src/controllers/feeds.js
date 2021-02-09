@@ -26,7 +26,7 @@ module.exports = {
                     
                     {
                         association: "Answers",
-                        attributes: ["answer", "createdAt"],
+                        attributes: ["id", "answer", "createdAt"],
                         include: { 
                             association: "Student",
                             attributes: ["id", "name"]
