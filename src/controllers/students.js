@@ -30,7 +30,7 @@ module.exports = {
 
 
                 const student = await Student.findByPk(id, {
-                    attributes: ["id", "ra", "name", "email", "createdAt", "updatedAt"] //busca por chave primaria e apenas puxa atributos mencionados
+                    attributes: ["id", "ra", "name", "email", "image", "createdAt", "updatedAt"] //busca por chave primaria e apenas puxa atributos mencionados
                 });
                 
                 if (student) {

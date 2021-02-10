@@ -1,6 +1,6 @@
 const Multer = require("multer");
 
-const uploadQuestionImage = Multer({
+const uploadImageMemoryStorage = Multer({
     storage: Multer.memoryStorage(),
     fileFilter: (req, file, callback) => {
         const allowedTypes = [ "image/jpeg", "image/png" ];
@@ -14,4 +14,4 @@ const uploadQuestionImage = Multer({
     limits: { fileSize: 1024 * 1024 * 2 } //Limite de 2 megabytes
 });
 
-module.exports = uploadQuestionImage.single("image");
+module.exports = uploadImageMemoryStorage.single("image");

@@ -14,7 +14,7 @@ module.exports = {
                 
                     {
                         association: "Student",
-                        attributes: ["id", "name"]
+                        attributes: ["id", "image", "name"]
                     },
 
                     {
@@ -29,7 +29,7 @@ module.exports = {
                         attributes: ["id", "answer", "createdAt"],
                         include: { 
                             association: "Student",
-                            attributes: ["id", "name"]
+                            attributes: ["id", "image", "name"]
                         }
                     }
                 ],

@@ -8,7 +8,7 @@ const multer = require("multer")
 
 //import dos middleware
 const authMiddleware = require("./middleware/authorization");
-const uploadQuestionImage = require("./middleware/uploadQuestionImage");
+const uploadImageMemoryStorage = require("./middleware/uploadImageMemoryStorage");
 const uploadImageService = require("./services/firebase");
 
 const studentMiddleware = require("./validators/student");
@@ -17,6 +17,7 @@ const answerValidator = require("./validators/answer");
 
 //Controllers
 const studentController = require("./controllers/students");
+const studentImageController = require("./controllers/studentImage")
 const questionController = require("./controllers/questions");
 const answerController = require("./controllers/answers");
 const feedController = require("./controllers/feeds");
@@ -95,6 +96,14 @@ routes.delete("/students/:id", studentController.delete);
 //endpoint PUT de edição de um student por id
 routes.put("/students/:id", studentController.update);
 
+//endpoint Post de adição/edição de imagem do student por id
+routes.post(
+  "/students/:id/image",
+  uploadImageMemoryStorage,
+  uploadImageService,
+  studentImageController.store
+);
+
 //--------------final das rotas de students---------------
 
 //--------------inicio de rotas de questions------------
@@ -103,7 +112,7 @@ routes.get("/questions", questionController.index);
 
 routes.post(
   "/questions",
-  uploadQuestionImage,
+  uploadImageMemoryStorage,
   uploadImageService,
   questionMiddleware.create,
   questionController.store
