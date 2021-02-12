@@ -143,6 +143,8 @@ routes.delete("/answer/:id", answerController.delete);
 
 routes.get("/feed", feedController.index);
 
+routes.post("/feed/search", feedController.find)
+
 //--------------final de rotas de feed------------
 
 //--------------inicio de rotas de categories------------
