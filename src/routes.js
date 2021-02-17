@@ -141,7 +141,7 @@ routes.delete("/answer/:id", answerController.delete);
 
 //--------------inicio de rotas de feed------------
 
-routes.get("/feed", feedController.index);
+routes.post("/feed", feedController.index);
 
 routes.post("/feed/search", feedController.find)
 

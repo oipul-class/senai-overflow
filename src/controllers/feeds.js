@@ -4,46 +4,45 @@ const { Op } = require("sequelize");
 module.exports = {
   async index(req, res) {
     try {
-      //   const feed = await Question.findAll({
-      //     attributes: [
-      //       "id",
-      //       "title",
-      //       "description",
-      //       "image",
-      //       "gist",
-      //       "createdAt",
-      //     ],
-      //     subQuery: false,
-      //     limit: 5,
-      //     include: [
-      //       {
-      //         association: "Student",
-      //         attributes: ["id", "image", "name"],
-      //       },
+      const feedOffset = req.body.feedOffset ? req.body.feedOffset : 0;
+      const feedLimit = req.body.feedLimit ? req.body.feedLimit : 1;
 
-      //       {
-      //         association: "Categories",
-      //         through: { attributes: [] },
-      //         attributes: ["id", "description"],
-      //       },
+      const feed = await Question.findAll({
+        attributes: [
+          "id",
+          "title",
+          "description",
+          "image",
+          "gist",
+          "createdAt",
+          "StudentId"
+        ],
+        include: [
+          {
+            association: "Student",
+            attributes: ["id", "image", "name"],
+          },
 
-      //       {
-      //         association: "Answers",
-      //         attributes: ["id", "answer", "createdAt"],
-      //         include: {
-      //           association: "Student",
-      //           attributes: ["id", "image", "name"],
-      //         },
-      //       },
-      //     ],
+          {
+            association: "Categories",
+            through: { attributes: [] },
+            attributes: ["id", "description"],
+          },
 
-      //   });
+          {
+            association: "Answers",
+            attributes: ["id", "answer", "createdAt"],
+            include: {
+              association: "Student",
+              attributes: ["id", "image", "name"],
+            },
+          },
+        ],
+        order: [["created_at", "DESC"]],
+        limit: [feedOffset, feedLimit]
+      });
 
-      const {feedOffset, feedLimit} = req.body;
-
-      const feed = await Question.findAll({offset: feedOffset, limit: feedLimit})
-
-      res.send(feed);
+      res.send(feed)
     } catch (error) {
       console.log(error);
       res.status(500).send({ error });

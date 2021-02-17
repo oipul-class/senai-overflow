@@ -6,7 +6,7 @@ const generateToken = (paylaod) => {
         paylaod, 
         auth.secret,
         {
-        expiresIn: "1d" 
+        expiresIn: "1h" 
         }
         );
 };
