@@ -1,5 +1,6 @@
 const Question = require("../models/Question");
 const Student = require("../models/Student");
+const { Op } = require("sequelize");
 
 module.exports = {
   async index(req, res) {
@@ -19,7 +20,7 @@ module.exports = {
     //inserir
     const { title, description, gist, categories } = req.body;
 
-    const { firebaseUrl} = req.file ? req.file : "";
+    const { firebaseUrl } = req.file ? req.file : "";
 
     const categoriesArray = categories.split(",");
 
@@ -52,8 +53,39 @@ module.exports = {
     }
   },
 
-  find(req, res) {
-    //GET'S que busca por ID
+  async find(req, res) {
+    const { searchParams } = req.query;
+
+    const questions = await Question.findAll({
+      attributes: ["id", "title", "description", "image", "gist", "createdAt"],
+      where: {
+          title: { [Op.substring]: searchParams }
+      },
+      include: [
+        {
+          association: "Student",
+          attributes: ["id", "image", "name"],
+        },
+
+        {
+          association: "Categories",
+          through: { attributes: [] },
+          attributes: ["id", "description"],
+        },
+
+        {
+          association: "Answers",
+          attributes: ["id", "answer", "createdAt"],
+          include: {
+            association: "Student",
+            attributes: ["id", "image", "name"],
+          },
+        },
+      ],
+      order: [["created_at", "DESC"]],
+    });
+
+    res.send(questions);
   },
 
   async update(req, res) {

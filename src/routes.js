@@ -23,6 +23,7 @@ const answerController = require("./controllers/answers");
 const feedController = require("./controllers/feeds");
 const sessionController = require("./controllers/sessions");
 const categoryController = require("./controllers/category");
+const question = require("./validators/question");
 
 
 
@@ -110,10 +111,13 @@ routes.post(
 
 routes.get("/questions", questionController.index);
 
+routes.get("/questions/search", question.index, questionController.find);
+
 routes.post(
   "/questions",
   uploadImageMemoryStorage,
   uploadImageService,
+  question.create,
   questionMiddleware.create,
   questionController.store
 );

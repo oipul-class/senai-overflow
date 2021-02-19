@@ -4,9 +4,8 @@ const { Op } = require("sequelize");
 module.exports = {
   async index(req, res) {
     try {
-      const feedOffset = req.body.feedOffset ? req.body.feedOffset : 0;
-      const feedLimit = req.body.feedLimit ? req.body.feedLimit : 1;
-
+      const {page} = req.query
+      
       const feed = await Question.findAll({
         attributes: [
           "id",
@@ -38,8 +37,8 @@ module.exports = {
             },
           },
         ],
-        order: [["created_at", "DESC"]],
-        limit: [feedOffset, feedLimit]
+        order: [["created_at", "ASC"]],
+        limit: page ? [(page - 1) * 5, 5] : undefined,
       });
 
       res.send(feed)
@@ -91,8 +90,6 @@ module.exports = {
         ],
         order: [["created_at", "DESC"]],
       });
-
-      console.log(feed);
 
       res.send(feed);
     } catch (error) {
