@@ -1,7 +1,9 @@
 const app = require("./app");
 
+require("dotenv").config()
+
 //criando porta
-const port = 3333;
+const port = process.env.PORT || 3333;
 
 //rodando servidor
 app.listen(port, () =>{
