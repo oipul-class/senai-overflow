@@ -1,6 +1,6 @@
 var admin = require("firebase-admin"); //import do firebase admin
 
-var serviceAccount = require("../config/firebaseKey.json"); //chave de serviço
+var serviceAccount = require("../config/firebaseKey.JS"); //chave de serviço
 
 const BUCKET = "senai-overflow-2021-01-60b94.appspot.com"; //storage/bucket
 

@@ -5,22 +5,25 @@ const express = require("express");
 const routes = require("./routes");
 const { errors } = require("celebrate");
 
+//require do dotenv
 const cors = require("cors");
 
-//import da conexão 
+//import da conexão
 require("./database");
 
 //criando app express
 const app = express();
 
+require("dotenv").config()
+
 //abilitando o uso de json
 app.use(express.json());
 
 //permição de site
-app.use(cors())
+app.use(cors());
 
 //rota de visizualização de imagem
-app.use("/uploads", express.static("uploads"))
+app.use("/uploads", express.static("uploads"));
 
 //usando as rotas programadas
 app.use(routes);

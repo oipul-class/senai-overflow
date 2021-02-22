@@ -31,6 +31,8 @@ npm install celebrate = validador que usa Joi
 
 npm install cors = gerenciador de permições de sites
 
+npm install dotenv = acesso a variaveis de ambiente do projeto
+
 ---banco
 npm install firebase-admin 
 

@@ -1,13 +1,13 @@
 /node_modules
 
-/uso
+/uso.txt
 
 /uso do sequelize
 
-/jsonWebToken
+/src/config/auth.js
 
-/src/config/auth.json
-
-/src/config/firebaseKey.json
+src/config/firebaseKey.js
 
 /uploads
+
+.env

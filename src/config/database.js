@@ -1,11 +1,15 @@
+require("dotenv").config();
+
 module.exports = {
-    host:"localhost", 
-    username:"root", // nome de usuario
-    password: "bcd127", // senha
-    database: "senai_overflow", // nome do banco de dados
-    dialect: "mysql", //qual database vai ser
+  host: process.env.DATABASE_HOST,
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_DB,
+  dialect: "mysql", //qual database vai ser
     define: {
-        timestamp: true, //hora de inserção 
-        underscored: true // troca o padrão cameCase pra underscored
-    }
-}
+        timezone: "-2:00",
+        timestamp: true, //hora de inserção
+        underscored: true, // troca o padrão cameCase pra underscored
+    },
+  
+};
