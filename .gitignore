@@ -4,10 +4,6 @@
 
 /uso do sequelize
 
-/src/config/auth.js
-
-src/config/firebaseKey.js
-
 /uploads
 
 .env
