@@ -1,9 +1,7 @@
+.idea
+
+src/config/auth
+
 /node_modules
-
-/uso.txt
-
-/uso do sequelize
-
-/uploads
 
 .env

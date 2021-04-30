@@ -21,10 +21,3 @@ Student.associate(conexao.models);
 Question.associate(conexao.models);
 Category.associate(conexao.models);
 Answer.associate(conexao.models);
-
-
-// for (let assoc of Object.keys(Question.associations)) {
-//      for (let accessor of Object.keys(Question.associations[assoc].accessors)) {
-//          console.log(Question.name + '.' + Question.associations[assoc].accessors[accessor] + '()');
-//      }
-// }
